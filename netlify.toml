@@ -11,3 +11,7 @@
 [build.environment]
   NODE_VERSION = "22.14.0"
 
+# Include all necessary files in the function bundle
+[functions]
+  included_files = ["views/**", "public/**", "models/**", "routes/**", "controller/**", "utils/**", "middleware.js", "schema.js", "cloudConfig.js", "app.js"]
+

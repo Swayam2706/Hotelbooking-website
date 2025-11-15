@@ -38,14 +38,17 @@ async function main() {
 }
 
 // --- EJS setup ---
+// Use absolute path for views directory (works in both local and serverless)
+const viewsPath = path.resolve(__dirname, "views");
 app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "views"));
+app.set("views", viewsPath);
 app.engine("ejs", ejsMate);
 
 // --- Middleware ---
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
-app.use(express.static(path.join(__dirname, "public")));
+// Use absolute path for static files (works in both local and serverless)
+app.use(express.static(path.resolve(__dirname, "public")));
 
 // ✅ If using local uploads with Multer (uncomment if not using Cloudinary)
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
