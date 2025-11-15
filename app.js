@@ -113,6 +113,12 @@ app.use((err, req, res, next) => {
 });
 
 // --- Server ---
-app.listen(8080, () => {
-    console.log("🚀 Server is listening on port 8080");
-});
+// Only listen if not in serverless environment
+if (process.env.NETLIFY_DEV !== "true" && !process.env.AWS_LAMBDA_FUNCTION_NAME) {
+    app.listen(8080, () => {
+        console.log("🚀 Server is listening on port 8080");
+    });
+}
+
+// Export app for serverless
+module.exports = app;
