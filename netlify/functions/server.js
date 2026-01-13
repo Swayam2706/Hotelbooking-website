@@ -9,7 +9,13 @@ const projectRoot = path.resolve(functionPath, "../..");
 // Change to project root directory to ensure relative paths work
 process.chdir(projectRoot);
 
-const app = require("../../app.js");
+let app;
+try {
+    app = require("../../app.js");
+} catch (error) {
+    console.error("Error loading app:", error);
+    throw error;
+}
 
 // Wrap the Express app with serverless-http
 exports.handler = serverless(app);
