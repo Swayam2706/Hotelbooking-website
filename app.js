@@ -54,15 +54,15 @@ app.use(express.static(path.resolve(__dirname, "public")));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 
-const store=MongoStore.create({
-    mongoUrl:dburl,
-    crypto:{
+const store = MongoStore.create({
+    mongoUrl: dburl,
+    crypto: {
         secret: process.env.SECRET,
     },
-    touchAfter:24*3600,
+    touchAfter: 24 * 3600,
 });
-store.on("error",()=>{
-    console.log("ERROR IN MONGO SESSION STORE",err);    
+store.on("error", () => {
+    console.log("ERROR IN MONGO SESSION STORE", err);
 });
 // --- Session & Flash ---
 const sessionOptions = {
@@ -117,11 +117,10 @@ app.use((err, req, res, next) => {
 
 // --- Server ---
 // Only listen if not in serverless environment
-if (process.env.NETLIFY_DEV !== "true" && !process.env.AWS_LAMBDA_FUNCTION_NAME) {
+if (require.main === module) {
     app.listen(8080, () => {
         console.log("🚀 Server is listening on port 8080");
     });
 }
 
-// Export app for serverless
 module.exports = app;
